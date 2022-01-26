@@ -10,13 +10,15 @@ public class CharController : MonoBehaviour
     private float turning_speed = 90;
     private float mouse_sensitivity_x = 180;
 
+    Animator char_animation;
+
     PlayerCamera my_camera;
 
     // Start is called before the first frame update
     void Start()
     {
         current_speed = WALKING_SPEED;
-        
+        char_animation = GetComponentInChildren<Animator>();
         my_camera = GetComponentInChildren<PlayerCamera>();
         my_camera.you_belong_to(this);
 
@@ -25,6 +27,9 @@ public class CharController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        char_animation.SetBool("walking_forward", false);
+        char_animation.SetBool("walking_backward", false);
+
         if (should_move_forward()) move_forward();
         if (should_move_backward()) move_backward();
 
@@ -43,6 +48,7 @@ public class CharController : MonoBehaviour
     private void turn(float mouse_turn_value_x)
     {
         transform.Rotate(Vector3.up, mouse_sensitivity_x * mouse_turn_value_x * Time.deltaTime);
+        if (Mathf.Abs(mouse_turn_value_x) > 0.5f) char_animation.SetBool("walking_backward", true);
     }
 
     private void turn_right()
@@ -58,7 +64,8 @@ public class CharController : MonoBehaviour
     private void turn_left()
     {
         transform.Rotate(Vector3.down, -turning_speed * Time.deltaTime);
-       
+        char_animation.SetBool("walking_backward", true);
+
     }
 
     private bool should_turn_left()
@@ -69,6 +76,7 @@ public class CharController : MonoBehaviour
     private void move_backward()
     {
         transform.position -= current_speed * transform.forward * Time.deltaTime;
+        char_animation.SetBool("walking_backward", true);
     }
 
     private bool should_move_backward()
@@ -79,6 +87,7 @@ public class CharController : MonoBehaviour
     {
         //move in F.R.I using s = u * p
         transform.position += current_speed * transform.forward * Time.deltaTime;
+        char_animation.SetBool("walking_forward", true);
     }
 
     private bool should_move_forward()
