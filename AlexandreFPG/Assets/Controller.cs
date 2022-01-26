@@ -53,6 +53,7 @@ public class CharacterController : MonoBehaviour
 
     private void move_backward()
     {
+        //comment
         // move in F.R.I. using s = u*t 
         transform.position -= current_speed * transform.forward * Time.deltaTime;
 
