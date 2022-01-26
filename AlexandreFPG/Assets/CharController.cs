@@ -22,6 +22,7 @@ public class CharController : MonoBehaviour
         if (should_move_forward()) move_forward();
         if (should_move_backward()) move_backward();
         if (should_turn_left()) turn_left();
+        if (should_turn_right()) turn_right();
 
         turn(Input.GetAxis("Horizontal"));
     }
@@ -31,9 +32,19 @@ public class CharController : MonoBehaviour
         transform.Rotate(Vector3.up, mouse_sensitivity_x * mouse_turn_value_x * Time.deltaTime);
     }
 
-    private void turn_left()
+    private void turn_right()
     {
         transform.Rotate(Vector3.up, -turning_speed * Time.deltaTime);
+
+    }
+    private bool should_turn_right()
+    {
+        return Input.GetKey(KeyCode.D);
+    }
+
+    private void turn_left()
+    {
+        transform.Rotate(Vector3.down, -turning_speed * Time.deltaTime);
        
     }
 
