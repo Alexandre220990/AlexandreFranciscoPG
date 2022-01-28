@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 710924b7025bc2f48820474d5c0e0ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zombie: {fileID: 3500088330045397870, guid: 2491ec0b402f06247be7f933fed5a0f7, type: 3}
 --- !u!4 &482313461
 Transform:
   m_ObjectHideFlags: 0
