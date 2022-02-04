@@ -27,7 +27,7 @@ public class enemyController : MonoBehaviour
     {
         enemy_animation.SetBool("walking_forward", true);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.J))
             target = the_manager.find_me_a_target();
 
         transform.position = Vector3.Lerp(transform.position, target.position, 0.001f);
