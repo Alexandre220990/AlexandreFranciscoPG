@@ -8,7 +8,14 @@ public class CharController : MonoBehaviour
     private float current_speed;
     private float WALKING_SPEED = 1,RUNNING_SPEED = 3;
     private float turning_speed = 90;
-    private float mouse_sensitivity_x = 180;
+    private float mouse_sensitivity_x = 120;
+
+    public Rigidbody rb;
+
+    public bool playerIsGrounded = true;
+    public float speed = 10f;
+
+    GameObject Plane;
 
     Animator char_animation;
 
@@ -22,6 +29,8 @@ public class CharController : MonoBehaviour
         my_camera = GetComponentInChildren<PlayerCamera>();
         my_camera.you_belong_to(this);
 
+        rb = GetComponentInChildren<Rigidbody>();
+
     }
 
     // Update is called once per frame
@@ -33,11 +42,39 @@ public class CharController : MonoBehaviour
         if (should_move_forward()) move_forward();
         if (should_move_backward()) move_backward();
 
+
         if (should_turn_left()) turn_left();
         if (should_turn_right()) turn_right();
 
+        if (should_jump()) jump();
+
         turn(Input.GetAxis("Horizontal"));
         adjust_camera(Input.GetAxis("Vertical"));
+
+    }
+
+    private bool should_jump()
+    {
+        return Input.GetKey(KeyCode.Space);
+    }
+
+    private void jump()
+    {
+        rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+
+        if  (playerIsGrounded)
+        {
+            
+            playerIsGrounded = false;
+        }
+        
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name == "Plane")
+        {
+            playerIsGrounded = true;
+        }
     }
 
     private void adjust_camera(float vertical_adjustment)
