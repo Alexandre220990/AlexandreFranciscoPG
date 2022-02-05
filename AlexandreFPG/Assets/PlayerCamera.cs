@@ -10,7 +10,7 @@ public class PlayerCamera : MonoBehaviour
     Transform owning_character_transform;
     private CharController owning_character;
     private float SENSITIVITY_VERTICAL_ROTATE = 0.01f;
-    private float focal_height = 2f;
+    private float focal_height = 0.2f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localPosition = Vector3.Lerp(transform.localPosition, desired_camera_position, 0.01f);
+        //transform.localPosition = Vector3.Lerp(transform.localPosition, desired_camera_position, 0.01f);
         transform.LookAt(owning_character_transform.position + focal_height * Vector3.up);
         print(Mathf.Rad2Deg * angle);
     }
