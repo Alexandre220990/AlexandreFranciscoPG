@@ -9,7 +9,8 @@ public class enemyController : MonoBehaviour
     public float lookRadius = 10f;
 
     Transform target;
-    NavMeshAgent agent;
+    //NavMeshAgent agent;
+
     private ManagerScript the_manager;
 
     Animator enemy_animation;
@@ -17,8 +18,9 @@ public class enemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // target = ManagerScript.instance.mainChar.tranform;
-        agent = GetComponent<NavMeshAgent>();
+        //target = ManagerScript.instance.mainChar.tranform;
+        //agent = GetComponent<NavMeshAgent>();
+
         enemy_animation = GetComponentInChildren<Animator>();
     }
 
@@ -35,11 +37,12 @@ public class enemyController : MonoBehaviour
             transform.LookAt(target.transform);
     }
 
-    private void OnDrawGizmosSelected()
+    /*private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
+    */
 
     internal void im_the_manager(ManagerScript managerScript)
     {
