@@ -6,9 +6,9 @@ using UnityEngine;
 public class CharController : MonoBehaviour
 {
     private float current_speed;
-    private float WALKING_SPEED = 3,RUNNING_SPEED = 6;
+    private float WALKING_SPEED = 3, RUNNING_SPEED = 10;
     private float turning_speed = 50;
-    private float mouse_sensitivity_x = 120;
+    private float mouse_sensitivity_x = 10;
 
     public Rigidbody rb;
 
@@ -34,6 +34,25 @@ public class CharController : MonoBehaviour
     {
         Movement();
     }
+    private void Movement()
+    {
+        char_animation.SetBool("walking_forward", false);
+        char_animation.SetBool("walking_backward", false);
+
+        if (should_move_forward()) move_forward();
+        if (should_move_backward()) move_backward();
+
+
+        if (should_turn_left()) turn_left();
+        if (should_turn_right()) turn_right();
+
+        if (should_jump()) jump();
+        if (should_run()) run();
+        if (should_walk()) walk();
+
+        turn(Input.GetAxis("Horizontal"));
+        adjust_camera(Input.GetAxis("Vertical"));
+    }
 
     private bool should_jump()
     {
@@ -44,9 +63,9 @@ public class CharController : MonoBehaviour
     {
         rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
 
-        
+
     }
-   
+
 
     private void adjust_camera(float vertical_adjustment)
     {
@@ -102,22 +121,24 @@ public class CharController : MonoBehaviour
     {
         return Input.GetKey(KeyCode.W);
     }
-    private void Movement()
+
+    private void walk()
     {
-        char_animation.SetBool("walking_forward", false);
-        char_animation.SetBool("walking_backward", false);
+        current_speed = WALKING_SPEED;
+    }
 
-        if (should_move_forward()) move_forward();
-        if (should_move_backward()) move_backward();
+    private bool should_walk()
+    {
+        return Input.GetKeyDown(KeyCode.R);
+    }
 
+    private void run()
+    {
+        current_speed = RUNNING_SPEED;
+    }
 
-        if (should_turn_left()) turn_left();
-        if (should_turn_right()) turn_right();
-
-        if (should_jump()) jump();
-
-        turn(Input.GetAxis("Horizontal"));
-        adjust_camera(Input.GetAxis("Vertical"));
-
+    private bool should_run()
+    {
+        return Input.GetKeyDown(KeyCode.E);
     }
 }
