@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class CharController : MonoBehaviour
 {
+    bool isGrounded=true;
     private float current_speed;
     private float WALKING_SPEED = 3, RUNNING_SPEED = 10;
     private float turning_speed = 50;
-    private float mouse_sensitivity_x = 10;
+    private float mouse_sensitivity_x = 60;
 
-    public Rigidbody rb;
+    public float damage = 10;
+    public float distance = 100f;
+
+    
+     Rigidbody rb;
 
 
-
+    GameObject see_cube;
     Animator char_animation;
 
     PlayerCamera my_camera;
@@ -21,6 +26,8 @@ public class CharController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //see_cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //see_cube.GetComponent<Collider>().enabled = false;
         current_speed = WALKING_SPEED;
         char_animation = GetComponentInChildren<Animator>();
         my_camera = GetComponentInChildren<PlayerCamera>();
@@ -33,6 +40,7 @@ public class CharController : MonoBehaviour
     void Update()
     {
         Movement();
+       
     }
     private void Movement()
     {
@@ -47,11 +55,58 @@ public class CharController : MonoBehaviour
         if (should_turn_right()) turn_right();
 
         if (should_jump()) jump();
+     
         if (should_run()) run();
         if (should_walk()) walk();
 
+
+        aim(should_aim());
+        
+
+         if (should_attack()) attack();
+
         turn(Input.GetAxis("Horizontal"));
         adjust_camera(Input.GetAxis("Vertical"));
+
+        if (!isGrounded && rb.velocity.y  < 0.1f)
+            isGrounded = check_if_grounded();
+    }
+
+    private void aim(bool continue_aiming)
+    {
+        my_camera.start_aiming(continue_aiming);
+
+    }
+
+    private bool should_aim()
+    {
+       return Input.GetMouseButton(2);
+    }
+
+    private void attack()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(my_camera.transform.position, my_camera.transform.forward, out hit, distance))
+        {
+
+        }
+    }
+
+    private bool should_attack()
+    {
+        return Input.GetButtonDown("Fire1");
+    }
+
+    private bool check_if_grounded()
+    {   
+       Collider[] cols = Physics.OverlapBox(rb.position - new Vector3(0, 2f, 0), new Vector3(0.5f, 0.5f, 0.5f));
+        //see_cube.transform.position = rb.position - new Vector3(0, 2f, 0);
+        foreach (Collider c in cols)
+        {
+            if (c.tag == "ground") return true;
+        }
+
+        return false;
     }
 
     private bool should_jump()
@@ -61,9 +116,11 @@ public class CharController : MonoBehaviour
 
     private void jump()
     {
-        rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
-
-
+        if (isGrounded)
+        {
+            rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+            isGrounded = false;
+        }
     }
 
 

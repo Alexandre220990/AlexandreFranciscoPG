@@ -32,9 +32,12 @@ public class enemyController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
             target = the_manager.find_me_a_target();
 
-        transform.position = Vector3.Lerp(transform.position, target.position, 0.001f);
+        if (target)
+        {
+            transform.position = Vector3.Lerp(transform.position, target.position, 0.001f);
 
             transform.LookAt(target.transform);
+        }
     }
 
     /*private void OnDrawGizmosSelected()
