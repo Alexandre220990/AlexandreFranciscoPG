@@ -7,8 +7,10 @@ using UnityEngine.AI;
 public class enemyController : MonoBehaviour
 {
     public float lookRadius = 10f;
+    float walking_speed = 2f;
 
     Transform target;
+    //public Transform player;
     //NavMeshAgent agent;
 
     private ManagerScript the_manager;
@@ -34,9 +36,15 @@ public class enemyController : MonoBehaviour
 
         if (target)
         {
-            transform.position = Vector3.Lerp(transform.position, target.position, 0.001f);
 
-            transform.LookAt(target.transform);
+            transform.LookAt(new Vector3(target.position.x, transform.position.y,target.position.z))  ;
+
+            Vector3 fromZombieToTarget = target.position - transform.position;
+            fromZombieToTarget = new Vector3(fromZombieToTarget.x, 0f, fromZombieToTarget.z);
+            Vector3 direction = fromZombieToTarget.normalized;
+
+            transform.position += walking_speed * direction * Time.deltaTime;
+
         }
     }
 
