@@ -15,7 +15,7 @@ public class ManagerScript : MonoBehaviour
     {
         zombies = new List<enemyController>();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             //GameObject g = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
