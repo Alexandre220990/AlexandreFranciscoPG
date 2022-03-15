@@ -68,7 +68,7 @@ public class CharController : MonoBehaviour
         turn(Input.GetAxis("Horizontal"));
         adjust_camera(Input.GetAxis("Vertical"));
 
-        if (!isGrounded && rb.velocity.y  < 0.1f)
+        if (!isGrounded) // && rb.velocity.y  < 0.1f)
             isGrounded = check_if_grounded();
     }
 
@@ -99,7 +99,7 @@ public class CharController : MonoBehaviour
 
     private bool check_if_grounded()
     {   
-       Collider[] cols = Physics.OverlapBox(rb.position - new Vector3(0, 2f, 0), new Vector3(0.5f, 0.5f, 0.5f));
+       Collider[] cols = Physics.OverlapBox(transform.position - new Vector3(0, 2f, 0), new Vector3(0.5f, 0.5f, 0.5f));
         //see_cube.transform.position = rb.position - new Vector3(0, 2f, 0);
         foreach (Collider c in cols)
         {
