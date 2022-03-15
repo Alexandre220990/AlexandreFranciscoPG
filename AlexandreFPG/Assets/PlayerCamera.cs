@@ -8,7 +8,7 @@ public class PlayerCamera : MonoBehaviour
 
 {   enum camera_mode { Normal, Aiming, Transition_to_Aim, Transition_to_Normal }
     camera_mode is_currently = camera_mode.Normal;
-    float angle = 0f, distance = 15f, camera_height = 5f;
+    float angle = 0f, distance = 10f, camera_height = 5f;
     private Vector3 desired_camera_position;
     Transform owning_character_transform;
     private CharController owning_character;
@@ -100,6 +100,7 @@ public class PlayerCamera : MonoBehaviour
         angle = Mathf.Clamp(angle, -2, 0);
 
         desired_camera_position = camera_height * Vector3.up + new Vector3(0, distance * Mathf.Cos(angle), distance * Mathf.Sin(angle));
+        //desired_camera_position = new Vector3(20, -1, 10);
     }
 
 }
