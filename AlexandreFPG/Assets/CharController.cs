@@ -22,6 +22,7 @@ public class CharController : MonoBehaviour
     Animator char_animation;
 
     PlayerCamera my_camera;
+    FocusScript my_focus;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +31,10 @@ public class CharController : MonoBehaviour
         //see_cube.GetComponent<Collider>().enabled = false;
         current_speed = WALKING_SPEED;
         char_animation = GetComponentInChildren<Animator>();
-        my_camera = GetComponentInChildren<PlayerCamera>();
-        my_camera.you_belong_to(this);
+        my_camera = FindObjectOfType<PlayerCamera>();
+
+        my_focus = GetComponentInChildren<FocusScript>();
+        my_camera.you_belong_to(this, my_focus);
 
         rb = GetComponentInChildren<Rigidbody>();
     }
@@ -126,6 +129,8 @@ public class CharController : MonoBehaviour
 
     private void adjust_camera(float vertical_adjustment)
     {
+        my_focus.adjust_vertical_angle(vertical_adjustment);
+
         my_camera.adjust_vertical_angle(vertical_adjustment);
     }
 
