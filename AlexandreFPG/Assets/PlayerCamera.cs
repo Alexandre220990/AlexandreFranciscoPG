@@ -12,6 +12,7 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 desired_camera_position;
     Transform owning_character_transform;
     private CharController owning_character;
+    private FocusScript focus;
     private float SENSITIVITY_VERTICAL_ROTATE = 0.003f;
     private float focal_height = 0.2f;
 
@@ -29,17 +30,20 @@ public class PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        transform.LookAt(focus.transform);
+
         switch (is_currently)
         {
             case camera_mode.Normal:
-                transform.localPosition = Vector3.Lerp(transform.localPosition, desired_camera_position, 0.1f);
-                transform.LookAt(owning_character_transform.position + focal_height * Vector3.up);
+                transform.position = Vector3.Lerp(transform.localPosition, desired_camera_position, 0.1f);
+              
 
                 break;
 
             case camera_mode.Transition_to_Aim:
                 transform.localPosition = Vector3.Lerp(transform.localPosition, camera_aim_position, timer);
-                transform.localRotation = Quaternion.Slerp(transform.rotation, camera_aim_orientation, timer);
+             //   transform.localRotation = Quaternion.Slerp(transform.rotation, camera_aim_orientation, timer);
 
                 timer += Time.deltaTime;
                 if (timer > 1.0f)
@@ -51,7 +55,7 @@ public class PlayerCamera : MonoBehaviour
 
             case camera_mode.Transition_to_Normal:
                 transform.localPosition = Vector3.Lerp(transform.localPosition, desired_camera_position, timer);
-                transform.rotation = Quaternion.Slerp(transform.rotation, owning_character_transform.rotation, timer);
+            //    transform.rotation = Quaternion.Slerp(transform.rotation, owning_character_transform.rotation, timer);
 
                 timer += Time.deltaTime;
                 if (timer > 1.0f)
@@ -88,10 +92,12 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
-    internal void you_belong_to(CharController charController)
+    internal void you_belong_to(CharController charController, FocusScript my_focus)
     {
         owning_character_transform = charController.transform;
         owning_character = charController;
+        focus = my_focus;
+
     }
 
     internal void adjust_vertical_angle(float vertical_adjustment)
@@ -99,8 +105,8 @@ public class PlayerCamera : MonoBehaviour
         angle -= SENSITIVITY_VERTICAL_ROTATE * vertical_adjustment;
         angle = Mathf.Clamp(angle, -2, 0);
 
-        desired_camera_position = camera_height * Vector3.up + new Vector3(0, distance * Mathf.Cos(angle), distance * Mathf.Sin(angle));
-        //desired_camera_position = new Vector3(20, -1, 10);
+        desired_camera_position = owning_character_transform.position + camera_height * Vector3.up - distance * owning_character_transform.forward;
+        //desired_camera_position = new Vector3(0, distance, 10);
     }
 
 }
