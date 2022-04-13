@@ -13,16 +13,16 @@ public class CharController : MonoBehaviour
 
     public float damage = 10;
     public float distance = 100f;
+    float turning_sensitivity = 20;
+    float elevation_angle = 0;
 
-    
-     Rigidbody rb;
-
+    Rigidbody rb;
 
     GameObject see_cube;
     Animator char_animation;
 
     PlayerCamera my_camera;
-    FocusScript my_focus;
+    FocusScript cross_hair;
 
     // Start is called before the first frame update
     void Start()
@@ -30,11 +30,19 @@ public class CharController : MonoBehaviour
         //see_cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         //see_cube.GetComponent<Collider>().enabled = false;
         current_speed = WALKING_SPEED;
-        char_animation = GetComponentInChildren<Animator>();
-        my_camera = FindObjectOfType<PlayerCamera>();
 
-        my_focus = GetComponentInChildren<FocusScript>();
-        my_camera.you_belong_to(this, my_focus);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+
+        cross_hair = GetComponentInChildren<FocusScript>();
+        cross_hair.starting_setup(transform);
+        my_camera = Camera.main.GetComponent<PlayerCamera>();
+        my_camera.Link(transform, cross_hair.transform);
+
+        char_animation = GetComponentInChildren<Animator>();
+        
+
 
         rb = GetComponentInChildren<Rigidbody>();
     }
@@ -62,8 +70,6 @@ public class CharController : MonoBehaviour
         if (should_run()) run();
         if (should_walk()) walk();
 
-
-        aim(should_aim());
         
 
          if (should_attack()) attack();
@@ -75,16 +81,8 @@ public class CharController : MonoBehaviour
             isGrounded = check_if_grounded();
     }
 
-    private void aim(bool continue_aiming)
-    {
-        my_camera.start_aiming(continue_aiming);
+ 
 
-    }
-
-    private bool should_aim()
-    {
-       return Input.GetMouseButton(2);
-    }
 
     private void attack()
     {
@@ -129,8 +127,7 @@ public class CharController : MonoBehaviour
 
     private void adjust_camera(float vertical_adjustment)
     {
-        my_focus.adjust_vertical_angle(vertical_adjustment);
-
+        cross_hair.adjust_vertical_angle(vertical_adjustment);
         my_camera.adjust_vertical_angle(vertical_adjustment);
     }
 
