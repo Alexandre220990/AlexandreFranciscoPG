@@ -15,7 +15,12 @@ public class enemyController : MonoBehaviour
 
     private ManagerScript the_manager;
 
+    enum enemy_State {Idle, Attacking, Dying}
+    [SerializeField]
+    enemy_State _currentState = enemy_State.Idle;
     Animator enemy_animation;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +34,19 @@ public class enemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        switch (_currentState)
+        {
+            case enemy_State.Idle:
+                enemy_Idle();
+                break;
+            case
+                enemy_State.Attacking:
+                break;
+            case
+                enemy_State.Dying:
+                break;
+
+        }
         enemy_animation.SetBool("walking_forward", true);
 
         if (Input.GetKeyDown(KeyCode.J))
@@ -46,6 +64,14 @@ public class enemyController : MonoBehaviour
             transform.position += walking_speed * direction * Time.deltaTime;
 
         }
+    }
+
+    private void enemy_Idle()
+    {
+        enemy_animation.SetBool("is_Idle", true);
+        enemy_animation.SetBool("is_Running", false);
+        enemy_animation.SetBool("is_Dead", false);
+        enemy_animation.SetBool("is_Attacking", false);
     }
 
     /*private void OnDrawGizmosSelected()
