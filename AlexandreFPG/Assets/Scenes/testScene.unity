@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombie: {fileID: 4803014352389650695, guid: 06cb2b131fe009c47a523671a8fa9ed8, type: 3}
-  mainChar: {fileID: 0}
+  mainChar: {fileID: 1322398637}
 --- !u!4 &482313461
 Transform:
   m_ObjectHideFlags: 0
@@ -479,6 +479,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8cd9bf5e98da264c9e9f716154334c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1322398637 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2830499106333426384, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+  m_PrefabInstance: {fileID: 2830499106123785770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1417164470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2830499105356321850, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+  m_PrefabInstance: {fileID: 2830499106123785770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1417164472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417164470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b13cb8d0430f948bb893a1d07e2143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 3976574237411743310, guid: 63d1a2a264150b947afd88b9bd62d357, type: 3}
 --- !u!1 &1774246894
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,6 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9028dc6445f01243a440479d9947314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owning_character_transform: {fileID: 2004952316}
 --- !u!4 &2004952316 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2830499106333426390, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
@@ -594,6 +618,46 @@ PrefabInstance:
     - target: {fileID: 2830499105346840466, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.43241668
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.000000033527613
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00000046938652
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9559842
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2776551
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.026463091
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.091114014
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 31.739
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 6.834
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830499105356417118, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 12.834
       objectReference: {fileID: 0}
     - target: {fileID: 2830499106333426384, guid: 32781b79afcbe6b4c81fa1fc556ea231, type: 3}
       propertyPath: m_Name
