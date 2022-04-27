@@ -10,12 +10,12 @@ public class enemyController : MonoBehaviour
     float walking_speed = 2f;
 
     Transform target;
-    //public Transform player;
+    Transform enemy;
     //NavMeshAgent agent;
 
     private ManagerScript the_manager;
 
-    enum enemy_State { move_to_player, Attacking, Dying}
+    enum enemy_State { move_to_player, Attacking, Dying }
     [SerializeField]
     enemy_State _currentState = enemy_State.move_to_player;
     Animator enemy_animation;
@@ -28,6 +28,7 @@ public class enemyController : MonoBehaviour
         //target = ManagerScript.instance.mainChar.tranform;
         //agent = GetComponent<NavMeshAgent>();
         target = the_manager.mainChar.transform;
+        enemy = the_manager.zombie.transform;
 
         enemy_animation = GetComponentInChildren<Animator>();
     }
@@ -35,11 +36,32 @@ public class enemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float distance = Vector3.Distance(target.transform.position, transform.position);
+
+        /*https://www.mpgh.net/forum/512-unity-udk-gamestudio-cryengine-development/427244-unity-enemy-ai-health-attack-scripts-c.html*/
+        //*
+        Vector3 dir = (target.transform.position - transform.position).normalized;
+        float direct = Vector3.Dot(dir, transform.forward);
+
+
+        if (distance < 2.5f)
+        {
+            if (direct > 0)
+            {
+                _currentState = enemy_State.Attacking;
+            }
+            
+        }
+        else
+            _currentState = enemy_State.move_to_player;
+        //*
+
         switch (_currentState)
         {
             case enemy_State.move_to_player:
 
                 enemy_animation.SetBool("walking_forward", true);
+                //enemy_animation.SetBool("is_attacking", false);
 
                 target = the_manager.find_me_a_target();
 
@@ -60,7 +82,12 @@ public class enemyController : MonoBehaviour
             case
                 enemy_State.Attacking:
 
-                enemy_animation.SetBool("is_Attacking", true);
+
+
+                enemy_animation.SetBool("is_attacking", true);
+                //enemy_animation.SetBool("walking_forward", false);
+
+
 
                 break;
             case
@@ -71,7 +98,7 @@ public class enemyController : MonoBehaviour
                 break;
 
         }
-        
+
     }
 
     /*private void OnDrawGizmosSelected()
@@ -85,4 +112,6 @@ public class enemyController : MonoBehaviour
     {
         the_manager = managerScript;
     }
+
+
 }
