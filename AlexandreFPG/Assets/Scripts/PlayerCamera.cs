@@ -39,7 +39,7 @@ public class PlayerCamera : MonoBehaviour
         angle = Mathf.Clamp(angle, -2, 0);
 
         desired_camera_position = character.position + (camera_height * Vector3.up) - (distance * owning_character_transform.forward);
-        //desired_camera_position = new Vector3(0, distance, 10);
+        
     }
     internal void Link(Transform character_transform, Transform crosshairs)
     {
