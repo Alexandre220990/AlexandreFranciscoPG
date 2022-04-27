@@ -9,7 +9,7 @@ public class PlayerCamera : MonoBehaviour
 {   
     float angle = 0f, distance = 10f, camera_height = 5f;
     private Vector3 desired_camera_position;
-    Transform owning_character_transform;
+    public Transform owning_character_transform;
     private CharController owning_character;
     private float SENSITIVITY_VERTICAL_ROTATE = 0.003f;
   
@@ -38,7 +38,7 @@ public class PlayerCamera : MonoBehaviour
         angle -= SENSITIVITY_VERTICAL_ROTATE * vertical_adjustment;
         angle = Mathf.Clamp(angle, -2, 0);
 
-        desired_camera_position = character.position + camera_height * Vector3.up - distance * owning_character_transform.forward;
+        desired_camera_position = character.position + (camera_height * Vector3.up) - (distance * owning_character_transform.forward);
         //desired_camera_position = new Vector3(0, distance, 10);
     }
     internal void Link(Transform character_transform, Transform crosshairs)
