@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyController : MonoBehaviour
+public class enemyController : MonoBehaviour, IDamageable
 {
     public float lookRadius = 10f;
     float walking_speed = 2f;
@@ -14,6 +14,10 @@ public class enemyController : MonoBehaviour
     //NavMeshAgent agent;
 
     private ManagerScript the_manager;
+   
+
+    public int MaxHP = 40;
+    public int CurrentHP;
 
     enum enemy_State { move_to_player, Attacking, Dying }
     [SerializeField]
@@ -29,7 +33,7 @@ public class enemyController : MonoBehaviour
         //agent = GetComponent<NavMeshAgent>();
         target = the_manager.mainChar.transform;
         enemy = the_manager.zombie.transform;
-
+        CurrentHP = MaxHP;
         enemy_animation = GetComponentInChildren<Animator>();
     }
 
@@ -44,24 +48,27 @@ public class enemyController : MonoBehaviour
         float direct = Vector3.Dot(dir, transform.forward);
 
 
-        if (distance < 2.5f)
+        if (distance < 1.5f)
         {
             if (direct > 0)
             {
                 _currentState = enemy_State.Attacking;
-            }
-            
+            }           
         }
         else
             _currentState = enemy_State.move_to_player;
         //*
+        if (CurrentHP <= 0)
+        {
+            _currentState = enemy_State.Dying;
+            Destroy(gameObject, 10f);
+        }
 
         switch (_currentState)
         {
             case enemy_State.move_to_player:
 
                 enemy_animation.SetBool("walking_forward", true);
-                //enemy_animation.SetBool("is_attacking", false);
 
                 target = the_manager.find_me_a_target();
 
@@ -82,12 +89,7 @@ public class enemyController : MonoBehaviour
             case
                 enemy_State.Attacking:
 
-
-
                 enemy_animation.SetBool("is_attacking", true);
-                //enemy_animation.SetBool("walking_forward", false);
-
-
 
                 break;
             case
@@ -96,17 +98,8 @@ public class enemyController : MonoBehaviour
                 enemy_animation.SetBool("is_Dead", true);
 
                 break;
-
         }
-
     }
-
-    /*private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
-    }
-    */
 
     internal void im_the_manager(ManagerScript managerScript)
     {
@@ -114,4 +107,19 @@ public class enemyController : MonoBehaviour
     }
 
 
+    private void OnTriggerEnter(Collider shoot)
+    {
+        if (shoot.gameObject.tag == "bullet")
+        {
+            print("Hit zombie");
+            takeDamage(20);
+        }
+    }
+
+    public void takeDamage(int Dmg)
+    {
+        print("Damage");
+        CurrentHP -= Dmg;  
+    }
+    
 }

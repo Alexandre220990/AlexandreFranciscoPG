@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2809759686213664047}
   m_Layer: 0
   m_Name: C2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   distance: 100
+  MaxHP: 60
+  CurrentHP: 0
 --- !u!54 &3492138226406764977
 Rigidbody:
   m_ObjectHideFlags: 0

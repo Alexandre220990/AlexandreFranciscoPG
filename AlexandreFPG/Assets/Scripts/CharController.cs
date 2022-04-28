@@ -15,6 +15,9 @@ public class CharController : MonoBehaviour
     public float distance = 100f;
     float turning_sensitivity = 20;
     float elevation_angle = 0;
+    public int MaxHP = 100;
+    public int CurrentHP;
+   
 
     Rigidbody rb;
 
@@ -41,8 +44,8 @@ public class CharController : MonoBehaviour
         my_camera.Link(transform, cross_hair.transform);
 
         char_animation = GetComponentInChildren<Animator>();
-        
 
+        CurrentHP = MaxHP;
 
         rb = GetComponentInChildren<Rigidbody>();
     }
@@ -70,10 +73,6 @@ public class CharController : MonoBehaviour
         if (should_run()) run();
         if (should_walk()) walk();
 
-        
-
-         if (should_attack()) attack();
-
         turn(Input.GetAxis("Horizontal"));
         adjust_camera(Input.GetAxis("Vertical"));
 
@@ -81,22 +80,6 @@ public class CharController : MonoBehaviour
             isGrounded = check_if_grounded();
     }
 
- 
-
-
-    private void attack()
-    {
-        RaycastHit hit;
-        if(Physics.Raycast(my_camera.transform.position, my_camera.transform.forward, out hit, distance))
-        {
-
-        }
-    }
-
-    private bool should_attack()
-    {
-        return Input.GetButtonDown("Fire1");
-    }
 
     private bool check_if_grounded()
     {   
@@ -200,4 +183,5 @@ public class CharController : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.E);
     }
+
 }

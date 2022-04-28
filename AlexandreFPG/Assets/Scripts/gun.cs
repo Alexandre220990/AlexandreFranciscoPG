@@ -5,15 +5,15 @@ using UnityEngine;
 public class gun : MonoBehaviour
 {
 
-    float bulletSpeed = 5000;
+    float bulletSpeed = 1000;
     public GameObject bullet;
     
-    void Fire()
+    void ShootWeapon()
     {
         GameObject tempBullet = Instantiate(bullet, transform.position,transform.rotation) as GameObject;
         Rigidbody tempRigidBodyBullet = tempBullet.GetComponent<Rigidbody>();
         tempRigidBodyBullet.AddForce(transform.up * bulletSpeed);
-        Destroy(tempBullet, 5f);
+        Destroy(tempBullet, 10f);
     }
 
 
@@ -21,7 +21,7 @@ public class gun : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Fire();
+            ShootWeapon();
 
         }
     }
