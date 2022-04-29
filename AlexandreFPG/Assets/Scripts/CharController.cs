@@ -17,8 +17,8 @@ public class CharController : MonoBehaviour
     float elevation_angle = 0;
     public int MaxHP = 100;
     public int CurrentHP;
-   
 
+    public GameObject bullet;
     Rigidbody rb;
 
     GameObject see_cube;
@@ -47,15 +47,28 @@ public class CharController : MonoBehaviour
 
         CurrentHP = MaxHP;
 
-        rb = GetComponentInChildren<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
-       
+        if (Input.GetMouseButtonDown(0))
+        {
+            ShootWeapon();
+
+        }
     }
+
+    void ShootWeapon()
+    {
+        Vector3 direction = (cross_hair.transform.position - transform.position).normalized;
+        GameObject tempBullet = Instantiate(bullet, transform.position+ transform.forward*2, Quaternion.LookRotation(direction,Vector3.up)) as GameObject;
+
+        Destroy(tempBullet, 10f);
+    }
+
     private void Movement()
     {
         char_animation.SetBool("walking_forward", false);
@@ -102,6 +115,7 @@ public class CharController : MonoBehaviour
     {
         if (isGrounded)
         {
+          
             rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
             isGrounded = false;
         }

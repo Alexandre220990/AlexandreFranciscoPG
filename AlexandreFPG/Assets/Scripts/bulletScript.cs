@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class bulletScript : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private float bullet_speed = 100f;
+
+    private void Update()
     {
-        if (other.tag == "Enemy")
+        transform.position += bullet_speed * transform.forward * Time.deltaTime;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+
+        print("ddddd");
+        if (other.gameObject.tag == "Enemy")
 
         {
             Destroy(gameObject);
         }
+
     }
 }
