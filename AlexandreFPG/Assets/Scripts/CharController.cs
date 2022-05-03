@@ -197,5 +197,4 @@ public class CharController : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.E);
     }
-
 }
